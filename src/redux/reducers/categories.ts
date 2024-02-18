@@ -33,7 +33,7 @@ const Categories = createSlice({
     resetCategories: () => {
       return initialState;
     },
-    updateCategoryId: (state, action) => {
+    updateCategoryId: (state, action: PayloadAction<number>) => {
       state.selectedId = action.payload;
     },
   },

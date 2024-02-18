@@ -56,13 +56,10 @@ const Home = ({ navigation }: any) => {
                             return (
                                 <View key={item.id}>
                                     <Tab
+                                        tabId={item.id}
                                         text={item.categoryTitle}
                                         isActive={item.id == categories.selectedId}
-                                        tabId={item.id}
-                                        onPress={(value: number) => {
-                                            dispatch(updateCategoryId(value));
-                                        }}
-
+                                        onPress={(value) => dispatch(updateCategoryId(value))}
                                     />
                                 </View>
                             );

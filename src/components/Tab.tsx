@@ -9,11 +9,11 @@ interface ITabProps {
     text: string;
     disable?: boolean;
     isActive?: boolean;
-    onPress: () => void;
-    tabId?: any;
+    onPress: (value: number) => {};
+    tabId: number;
 }
 
-const Tab: React.FC<ITabProps> = ({ text, disable, tabId, isActive }) => {
+const Tab: React.FC<ITabProps> = ({ text, disable, onPress, tabId, isActive }) => {
     const [width, setWidth] = useState(0);
     const textRef = useRef(null);
     const paddingHorizontal = 33;
@@ -30,7 +30,7 @@ const Tab: React.FC<ITabProps> = ({ text, disable, tabId, isActive }) => {
             className={"p-4 rounded-full mr-1" + setIsActive}
             style={tabWidth}
             disabled={disable}
-            onPress={() => { tabId }}
+            onPress={() => onPress(tabId)}
         >
             <Text
                 onTextLayout={(e) => {
