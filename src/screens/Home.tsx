@@ -21,6 +21,7 @@ import { updateFirstName } from "../redux/reducers/user";
 import Badges from "../components/Badges";
 import Tab from "../components/Tab";
 import { updateCategoryId } from "../redux/reducers/categories";
+import { useEffect, useState } from "react";
 
 const Home = ({ navigation }: any) => {
     // user store
@@ -29,6 +30,29 @@ const Home = ({ navigation }: any) => {
 
     // categories store
     const categories = useSelector((state: IRootState) => state.categories);
+
+    // pagination
+    const [categoryPage, setCategoryPage] = useState<number>(1);
+    const [categoryList, setCategoryList] = useState<{ id: number, categoryTitle: string }[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const categoryPageSize: number = 4;
+
+    useEffect(() => {
+        setCategoryList(pagination(categories.Categories, categoryPage, categoryPageSize))
+        setCategoryPage((prev) => prev + 1)
+    }, [])
+
+    console.log(categories.Categories.length)
+
+    const pagination = (items: any[], pageNumber: number, pageSize: number) => {
+        const startIndex = (pageNumber - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        if (startIndex >= items.length) {
+            return [];
+        }
+
+        return items.slice(startIndex, endIndex);
+    }
 
     return (
         <SafeAreaView className="flex-1 mx-4 mt-5 space-y-10">
@@ -49,6 +73,20 @@ const Home = ({ navigation }: any) => {
                 {/* Categories */}
                 <View className="mt-5 mx-1">
                     <FlatList
+                        onEndReachedThreshold={0.5}
+                        onEndReached={() => {
+                            console.log("end reached")
+                            let newData = pagination(
+                                categories.Categories,
+                                categoryPage,
+                                categoryPageSize
+                            )
+
+                            if (newData.length > 0) {
+                                setCategoryList(prevState => [...prevState, ...newData])
+                                setCategoryPage(prevState => prevState + 1)
+                            }
+                        }}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         data={categories.Categories}

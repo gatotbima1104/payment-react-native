@@ -22,6 +22,31 @@ const initialState = {
       id: 5,
       categoryTitle: "education",
     },
+    {
+      id: 6,
+      categoryTitle: "media",
+    },
+    {
+      id: 7,
+      categoryTitle: "football",
+    },
+    {
+      id: 8,
+      categoryTitle: "basketball",
+    },
+    {
+      id: 9,
+      categoryTitle: "soccer",
+    },
+    {
+      id: 10,
+      categoryTitle: "baseball",
+    },
+    {
+      id: 11,
+      categoryTitle: "hockey",
+    },
+    
   ],
   selectedId: 1,
 };
