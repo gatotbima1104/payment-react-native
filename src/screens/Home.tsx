@@ -17,10 +17,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ItemDonation from "../components/ItemDonation";
 import { useDispatch, useSelector } from "react-redux";
 import store, { IRootState } from "../redux/store";
-import { updateFirstName } from "../redux/reducers/user";
+import { updateFirstName } from "../redux/reducers/User";
 import Badges from "../components/Badges";
 import Tab from "../components/Tab";
-import { updateCategoryId } from "../redux/reducers/categories";
+import { updateCategoryId } from "../redux/reducers/Categories";
 import { useEffect, useState } from "react";
 
 const Home = ({ navigation }: any) => {
@@ -31,20 +31,27 @@ const Home = ({ navigation }: any) => {
     // categories store
     const categories = useSelector((state: IRootState) => state.categories);
 
+    // console.log(categories.categories)
+
+    interface ICategory {
+        id: number;
+        categoryTitle: string;
+    }
+
     // pagination
     const [categoryPage, setCategoryPage] = useState<number>(1);
-    const [categoryList, setCategoryList] = useState<{ id: number, categoryTitle: string }[]>([]);
+    const [categoryList, setCategoryList] = useState<ICategory[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const categoryPageSize: number = 4;
+    const categoryPageSize = 4;
 
     useEffect(() => {
-        setCategoryList(pagination(categories.Categories, categoryPage, categoryPageSize))
-        setCategoryPage((prev) => prev + 1)
+        setCategoryList(pagination(categories.categories, categoryPage, categoryPageSize))
+        setCategoryPage(prev => prev + 1)
     }, [])
 
-    console.log(categories.Categories.length)
+    // console.log(categories.categories.length)
 
-    const pagination = (items: any[], pageNumber: number, pageSize: number) => {
+    const pagination = (items: ICategory[], pageNumber: number, pageSize: number) => {
         const startIndex = (pageNumber - 1) * pageSize;
         const endIndex = startIndex + pageSize;
         if (startIndex >= items.length) {
@@ -68,16 +75,17 @@ const Home = ({ navigation }: any) => {
                 <SearchBar onSearch={(value) => console.log(value)} />
 
                 {/* badges */}
-                <Badges uriImage={require("../../assets/banner.webp")} />
+                <Badges uriImage={require("../../assets/charity.jpeg")} />
 
                 {/* Categories */}
-                <View className="mt-5 mx-1">
+                <View className="mt-5 mx-1 space-y-3">
+                    <Text className="font-bold" style={{ fontSize: wp(4) }}>Select Category</Text>
                     <FlatList
                         onEndReachedThreshold={0.5}
                         onEndReached={() => {
-                            console.log("end reached")
+                            console.log("end reached", categoryPage)
                             let newData = pagination(
-                                categories.Categories,
+                                categories.categories,
                                 categoryPage,
                                 categoryPageSize
                             )
@@ -87,9 +95,9 @@ const Home = ({ navigation }: any) => {
                                 setCategoryPage(prevState => prevState + 1)
                             }
                         }}
-                        horizontal
+                        horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        data={categories.Categories}
+                        data={categories.categories}
                         renderItem={({ item }) => {
                             return (
                                 <View key={item.id}>
@@ -106,29 +114,29 @@ const Home = ({ navigation }: any) => {
                 </View>
 
                 {/* Item Donation */}
-                <View className="flex-row flex-wrap justify-between mx-1">
+                <View className="flex-row flex-wrap justify-between">
                     <ItemDonation
                         name="Tree Cactus Images"
-                        uriImage={require("../../assets/cactus.jpeg")}
+                        uriImage={require("../../assets/afrika.jpeg")}
                         price={49}
                         titleBadge={"lifestyle"}
                     />
                     <ItemDonation
                         name="Tree Cactus Images"
-                        uriImage={require("../../assets/splash.png")}
+                        uriImage={require("../../assets/ethopia.jpeg")}
                         price={49}
                         titleBadge={"lifestyle"}
                     />
 
                     <ItemDonation
                         name="Tree Cactus Images"
-                        uriImage={require("../../assets/splash.png")}
+                        uriImage={require("../../assets/papua.jpeg")}
                         price={49}
                         titleBadge={"lifestyle"}
                     />
                     <ItemDonation
                         name="Tree Cactus Images"
-                        uriImage={require("../../assets/splash.png")}
+                        uriImage={require("../../assets/mali.jpeg")}
                         price={49}
                         titleBadge={"lifestyle"}
                     />

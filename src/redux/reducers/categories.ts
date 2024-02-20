@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  Categories: [
+  categories: [
     {
       id: 1,
       categoryTitle: "environment",
@@ -46,9 +46,12 @@ const initialState = {
       id: 11,
       categoryTitle: "hockey",
     },
-    
+    {
+      id: 12,
+      categoryTitle: "golf",
+    },
   ],
-  selectedId: 1,
+  selectedId: null,
 };
 
 const Categories = createSlice({
@@ -58,7 +61,7 @@ const Categories = createSlice({
     resetCategories: () => {
       return initialState;
     },
-    updateCategoryId: (state, action: PayloadAction<number>) => {
+    updateCategoryId: (state, action) => {
       state.selectedId = action.payload;
     },
   },

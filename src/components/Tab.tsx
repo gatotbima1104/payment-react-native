@@ -37,8 +37,8 @@ const Tab: React.FC<ITabProps> = ({ text, disable, onPress, tabId, isActive }) =
                     setWidth(e.nativeEvent.lines[0].width);
                 }}
                 ref={textRef}
-                className={"text-center" + setTextActive}
-                style={{ fontSize: hp(2) }}
+                className={"text-center font-semibold tracking-wider" + setTextActive}
+                style={{ fontSize: hp(1.5) }}
             >
                 {text}
             </Text>
