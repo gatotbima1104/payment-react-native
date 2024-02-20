@@ -16,27 +16,20 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import ItemDonation from "../components/ItemDonation";
 import { useDispatch, useSelector } from "react-redux";
-import store, { IRootState } from "../redux/store";
+import { IRootState } from "../redux/store";
 import { updateFirstName } from "../redux/reducers/User";
 import Badges from "../components/Badges";
 import Tab from "../components/Tab";
-import { updateCategoryId } from "../redux/reducers/Categories";
+import { resetCategories, updateCategoryId } from "../redux/reducers/Categories";
 import { useEffect, useState } from "react";
+import { ICategory, ICategoryState } from "../interface";
 
 const Home = ({ navigation }: any) => {
-    // user store
     const user = useSelector((state: IRootState) => state.user);
-    const dispatch = useDispatch();
-
-    // categories store
     const categories = useSelector((state: IRootState) => state.categories);
+    const donation = useSelector((state: IRootState) => state.donations);
 
-    // console.log(categories.categories)
-
-    interface ICategory {
-        id: number;
-        categoryTitle: string;
-    }
+    const dispatch = useDispatch();
 
     // pagination
     const [categoryPage, setCategoryPage] = useState<number>(1);
@@ -44,12 +37,24 @@ const Home = ({ navigation }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const categoryPageSize = 4;
 
+    // dispatch(resetCategories())
+
+    // set filtered items categories
+    const [items, setItems] = useState(donation.items)
+
+    // run this whenever state changes
+    useEffect(() => {
+        const items = donation.items.filter((item) => {
+            return item.categories.includes(categories.selectedId)
+        })
+        setItems(items)
+
+    }, [categories.selectedId])
+
     useEffect(() => {
         setCategoryList(pagination(categories.categories, categoryPage, categoryPageSize))
         setCategoryPage(prev => prev + 1)
     }, [])
-
-    // console.log(categories.categories.length)
 
     const pagination = (items: ICategory[], pageNumber: number, pageSize: number) => {
         const startIndex = (pageNumber - 1) * pageSize;
@@ -115,7 +120,25 @@ const Home = ({ navigation }: any) => {
 
                 {/* Item Donation */}
                 <View className="flex-row flex-wrap justify-between">
-                    <ItemDonation
+                    {items && items.map((item) => {
+
+                        const selectedCategory = categories.categories.find((cat) => {
+                            return cat.id == categories.selectedId
+                        })
+
+                        const titleBadge = selectedCategory ? selectedCategory.categoryTitle : ''
+
+
+                        return (
+                            <ItemDonation
+                                key={item.id}
+                                name={item.name}
+                                titleBadge={titleBadge}
+                                totalDonation={item.totalDonation}
+                            />
+                        )
+                    })}
+                    {/* <ItemDonation
                         name="Tree Cactus Images"
                         uriImage={require("../../assets/afrika.jpeg")}
                         price={49}
@@ -139,16 +162,17 @@ const Home = ({ navigation }: any) => {
                         uriImage={require("../../assets/mali.jpeg")}
                         price={49}
                         titleBadge={"lifestyle"}
-                    />
+                    /> */}
                 </View>
 
-                <Pressable
+                {/* <Pressable
                     onPress={() => dispatch(updateFirstName({ firstName: "Harry" }))}
                 >
                     <Text className="text-center text-blue-500 font-bold text-lg">
                         Click me
                     </Text>
-                </Pressable>
+                </Pressable> */}
+
             </ScrollView>
         </SafeAreaView>
     );

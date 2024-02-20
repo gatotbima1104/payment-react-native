@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   categories: [
@@ -51,7 +51,7 @@ const initialState = {
       categoryTitle: "golf",
     },
   ],
-  selectedId: null,
+  selectedId: 1,
 };
 
 const Categories = createSlice({
