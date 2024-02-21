@@ -3,11 +3,15 @@ import { Pressable, TextInput } from "react-native";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 
 interface ISearchBarProps {
-    placeholder: string;
+    placeholder?: string;
     onSearch?: (text: string) => void;
 }
 
-const SearchBar: React.FC<ISearchBarProps> = ({ placeholder, onSearch }) => {
+const defaults: Pick<ISearchBarProps, 'placeholder'> = {
+    placeholder: 'Search for anything'
+}
+
+const SearchBar: React.FC<ISearchBarProps> = ({ placeholder = defaults.placeholder, onSearch }) => {
 
     const inputRef = useRef<TextInput>(null)
     const [search, setSearch] = useState<string>('')

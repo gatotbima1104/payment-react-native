@@ -1,25 +1,66 @@
-import { View, Text, Image } from "react-native"
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {
+    View,
+    Text,
+    Image,
+    ImageSourcePropType,
+    Pressable,
+} from "react-native";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 interface IItemDonationProps {
-    uriImage: string;
+    donationId: number;
     name: string;
-    price: number;
+    uriImage?: ImageSourcePropType;
+    totalDonation?: number;
+    titleBadge?: string;
+    onPress: (donationId: number) => void;
 }
 
-const ItemDonation: React.FC<IItemDonationProps> = ({ uriImage, name, price }) => {
+const ItemDonation: React.FC<IItemDonationProps> = ({
+    uriImage,
+    name,
+    totalDonation,
+    titleBadge,
+    onPress,
+    donationId,
+}) => {
     return (
-        <View className="mt-5 p-2 rounded " style={{ width: wp(35) }}>
-            <View className="bg-slate-200 rounded">
-                <View className="bg-green-700 rounded-full p-2 w-2/3">
-                    <Text className="text-white font-bold text-center" style={{fontSize: wp(2.5)}}>Environment</Text>
+        <Pressable
+            className="p-2 rounded space-y-1"
+            style={{ width: wp(43) }}
+            onPress={() => onPress(donationId)}
+        >
+            <View className="rounded">
+                <View
+                    className="bg-green-700 rounded-full absolute z-10 top-1 left-1"
+                    style={{ padding: wp(2) }}
+                >
+                    <Text
+                        className="text-white font-bold text-center"
+                        style={{ fontSize: wp(2.5) }}
+                    >
+                        {titleBadge}
+                    </Text>
                 </View>
-                <Image source={{ uri: uriImage }} style={{ width: wp(30), height: hp(10) }} className="border" />
+                <Image
+                    source={uriImage}
+                    style={{ width: wp(39), height: hp(20), objectFit: "cover" }}
+                    className="rounded"
+                />
             </View>
-            <Text className="font-bold tracking-wide" style={{ fontSize: 15 }}>{name.length > 13 ? name.slice(0, 13) + ('...') : name}</Text>
-            <Text className="text-blue-500">${price}</Text>
-        </View>
-    )
-}
+            <Text className="font-bold tracking-wide"
+                style={{ fontSize: wp(3.5) }}
+                numberOfLines={1}
+            >
+                {/* {name.length > 13 ? name.slice(0, 13) + "..." : name} */}
+                {name}
+            </Text>
+            <Text className="text-blue-500">{totalDonation}</Text>
+        </Pressable>
+    );
+};
 
-export default ItemDonation
+export default ItemDonation;
