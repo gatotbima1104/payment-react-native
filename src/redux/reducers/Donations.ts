@@ -1,6 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface IDonationItem {
+  items: {
+    id: number;
+    name: string;
+    totalDonation: number;
+    categories: number[];
+    desc: string;
+    imageUrl: string;
+  }[],
+  selectedItem: number | null,
+  selectedInformationId: {
+    id?: number;
+    name?: string;
+    totalDonation?: number;
+    categories?: number[];
+    desc?: string;
+    imageUrl?: string;
+  },
+}
+
+const initialState: IDonationItem = {
   items: [
     {
       id: 1,

@@ -13,7 +13,7 @@ interface IBackButtonProps {
 
 const BackButton: React.FC<IBackButtonProps> = ({ onPress }) => {
     return (
-        <Pressable className="w-[40px] p-2 items-center rounded-full bg-slate-200" onPress={onPress}>
+        <Pressable className="w-[40px] p-2 items-center rounded-full bg-slate-200 mb-5" onPress={onPress}>
             <ArrowLeftIcon size={wp(6)} color={'black'} />
         </Pressable>
     )
