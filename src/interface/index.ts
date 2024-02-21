@@ -3,10 +3,11 @@ export interface ICategory {
   categoryTitle: string;
 }
 
-export interface ICategoryState {
-  categories: number[];
-  selectedId: number;
+export interface IDonationItem {
+  id: number;
   name: string;
-  desc: string;
   totalDonation: number;
+  categories: number[];
+  desc: string;
+  imageUrl: string;
 }
