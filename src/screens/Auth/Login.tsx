@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
+import { Pressable, SafeAreaView, Text, View } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -10,25 +10,34 @@ import { useState } from "react";
 
 const Login = ({ navigation }: any) => {
 
-  const [email, setEmail] = useState<string>("");
-  const handleValue = (val: string) => {
-    setEmail(val)
-  }
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   return (
-    <SafeAreaView className="flex-1 justify-center mx-4">
+    <SafeAreaView className="flex-1 justify-center mx-6">
       <View className="space-y-5">
-        <Text className="font-bold mb-5" style={{ fontSize: wp(5) }}>
+        {/* Title */}
+        <Text
+          className="text-center font-bold mb-5"
+          style={{ fontSize: wp(5) }}>
           Welcome Back
         </Text>
 
+        {/* input form */}
         <InputForm
           label="Email"
-          placeholder="gatotbima123@gmail.com"
-          onChange={handleValue}
+          placeholder="example@gmail.com"
+          keyboardType="email-address"
+          onChangeText={(val) => setEmail(val)}
         />
-        <InputForm label="Password" placeholder="******" />
+        <InputForm
+          isPassword={true}
+          label="Password"
+          placeholder="******"
+          onChangeText={(val) => setPassword(val)}
+        />
 
+        {/* button */}
         <Button text="Login" />
 
         <Text className="text-center font-bold text-blue-500">

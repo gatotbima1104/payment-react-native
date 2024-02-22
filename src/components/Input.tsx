@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextInput, View, Text } from "react-native";
+import { TextInput, View, Text, KeyboardTypeOptions } from "react-native";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
@@ -8,11 +8,14 @@ import {
 interface IInputForm {
     label?: string;
     placeholder?: string;
-    onChange?: (val: string) => void
+    onChangeText?: (val: string) => void
+    keyboardType?: KeyboardTypeOptions
+    isPassword?: boolean
 }
 
-const InputForm: React.FC<IInputForm> = ({ label, placeholder, onChange }) => {
-    const [value, setValue] = useState<string>("");
+const InputForm: React.FC<IInputForm> = ({ label, placeholder, onChangeText, keyboardType, isPassword }) => {
+
+    const [value, setValue] = useState<string>('');
 
     return (
         <View className="space-y-2 my-3">
@@ -24,11 +27,13 @@ const InputForm: React.FC<IInputForm> = ({ label, placeholder, onChange }) => {
                     borderColor: "grey",
                     marginVertical: hp(1),
                 }}
+                secureTextEntry={isPassword}
+                keyboardType={keyboardType}
                 className="placeholder:pb-2"
                 value={value}
                 onChangeText={(val) => {
                     setValue(val);
-                    onChange
+                    onChangeText?.(val);
                 }}
             />
         </View>
