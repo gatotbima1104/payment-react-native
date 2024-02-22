@@ -23,6 +23,8 @@ import { updateCategoryId } from "../redux/reducers/Categories";
 import { useEffect, useState } from "react";
 import { ICategory, IDonationItem } from "../interface";
 import { updateDonationId } from "../redux/reducers/Donations";
+import { Routes } from "../navigation/Route";
+import SingleDonation from "./SingleDonation";
 
 const Home = ({ navigation }: any) => {
     const [categoryPage, setCategoryPage] = useState<number>(1);
@@ -66,12 +68,14 @@ const Home = ({ navigation }: any) => {
     return (
         <SafeAreaView className="flex-1 mx-4 mt-5 space-y-10">
             <ScrollView showsVerticalScrollIndicator={false} className="space-y-5">
+                
                 {/* Header */}
                 <Header
                     greeting="Hello,"
                     icon={HandThumbUpIcon}
                     name={user.firstName + " " + user.lastName}
                 />
+
 
                 {/* Search bar  */}
                 <SearchBar onSearch={(value) => console.log(value)} />
@@ -122,6 +126,7 @@ const Home = ({ navigation }: any) => {
                             return cat.id == categories.selectedId
                         })
                         const titleBadge = selectedCategory ? selectedCategory.categoryTitle : ''
+                        
                         return (
                             <ItemDonation
                                 key={item.id}
@@ -132,7 +137,9 @@ const Home = ({ navigation }: any) => {
                                 uriImage={{ uri: item.imageUrl }}
                                 onPress={(selectedItemId) => {
                                     dispatch(updateDonationId(selectedItemId))
-                                    navigation.navigate('SingleDonation')
+                                    navigation.navigate(Routes.SingleDonation, {
+                                        titleBadge: item.categories
+                                    })
                                 }}
                             />
                         )

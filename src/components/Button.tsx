@@ -10,7 +10,7 @@ interface IButtonProps {
 const Button: React.FC<IButtonProps> = ({ text, disable, onPress }) => {
     return (
         <View className="mt-5">
-            <Pressable className="bg-blue-300 p-5 rounded-full" disabled={disable} onPress={onPress}>
+            <Pressable className="bg-blue-500 p-5 rounded-full" disabled={disable} onPress={onPress}>
                 <Text className="text-center text-white font-bold" style={{ fontSize: hp(2) }}>{text}</Text>
             </Pressable>
         </View>
