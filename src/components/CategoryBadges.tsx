@@ -13,7 +13,7 @@ const CategoriesBadges: React.FC<ICategoryBadges> = ({ title }) => {
     return (
 
         <View
-            className="bg-green-700 rounded-full" 
+            className="bg-green-700 rounded-full mr-2" 
             style={{ padding: wp(2), width: wp(20)}}
         >
             <Text

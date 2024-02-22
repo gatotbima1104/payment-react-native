@@ -23,6 +23,8 @@ import { updateCategoryId } from "../redux/reducers/Categories";
 import { useEffect, useState } from "react";
 import { ICategory, IDonationItem } from "../interface";
 import { updateDonationId } from "../redux/reducers/Donations";
+import { Routes } from "../navigation/Route";
+import SingleDonation from "./SingleDonation";
 
 const Home = ({ navigation }: any) => {
     const [categoryPage, setCategoryPage] = useState<number>(1);
@@ -124,6 +126,7 @@ const Home = ({ navigation }: any) => {
                             return cat.id == categories.selectedId
                         })
                         const titleBadge = selectedCategory ? selectedCategory.categoryTitle : ''
+                        
                         return (
                             <ItemDonation
                                 key={item.id}
@@ -134,8 +137,8 @@ const Home = ({ navigation }: any) => {
                                 uriImage={{ uri: item.imageUrl }}
                                 onPress={(selectedItemId) => {
                                     dispatch(updateDonationId(selectedItemId))
-                                    navigation.navigate('SingleDonation', {
-                                        titleBadge,
+                                    navigation.navigate(Routes.SingleDonation, {
+                                        titleBadge: item.categories
                                     })
                                 }}
                             />
